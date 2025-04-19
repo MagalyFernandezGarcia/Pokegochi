@@ -20,11 +20,11 @@ export default function RootLayout({
       <body
        className=" h-screen w-screen "
       >
-        <header className="w-full bg-red-200 h-20 flex items-center">
+        <header className="w-full bg-pink-300 h-20 flex items-center">
           <Link href="/">
           <Image src="/pokeGochiLogo.png" alt="PokeGochi Logo" width={50} height={50} /></Link>
         </header>
-        <main>{children}</main>
+        <main className="bg-yellow-50 h-[93.8vh]">{children}</main>
         
       </body>
     </html>
