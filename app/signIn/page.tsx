@@ -1,9 +1,17 @@
-import SignUpForm from "../SignUpForm";
+import { auth } from "@/auth"
+import SignUpForm from "../SignUpForm"
+import { redirect } from "next/navigation"
 
-
-export default function SignIn() {
-    return (
-        <section className="flex justify-center items-center h-1/2"><SignUpForm/></section>
-       
-    );
-}
+ 
+export default async  function SignIn() {
+    const session = await auth()
+   
+    if (session) {
+       redirect("/")
+      }
+    
+  return (<section className="flex items-center justify-center h-1/2"><SignUpForm/></section>
+    
+   
+  )
+} 
