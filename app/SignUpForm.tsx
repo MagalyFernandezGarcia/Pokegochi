@@ -1,5 +1,6 @@
+import SignInGoogleBtn from "@/components/SignInGoogleBtn";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import SignInGoogleBtn from "@/components/ui/SignInGoogleBtn";
+
 
 
 export default function SignUpForm() {
