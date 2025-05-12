@@ -1,14 +1,18 @@
+import { auth } from "@/auth";
 import Modal from "@/components/Modal";
+import NewSaveForm from "@/components/NewSaveForm";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 
-export default function NewSaveModal() {
+
+export default async function NewSaveModal() {
+     const session = await auth()
+     if(!session) return null
     return <Modal>
         <DialogHeader>
             <DialogTitle>Welcome to Pokegochi !</DialogTitle></DialogHeader>
-            <div><Label>What's your name ?</Label><Input/></div>
+            <NewSaveForm mail={session.user?.email??""}/>
+            
             
 
     </Modal>

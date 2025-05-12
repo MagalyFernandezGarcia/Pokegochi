@@ -1,15 +1,17 @@
 "use server"
 
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
-export async function createSave( mail : string) {
-    console.log(mail);
+
+export async function createSave( mail : string, name : string) {
+    console.log("function");
     
-    
-    return await prisma.save.create({data: {
+     await prisma.save.create({data: {
         userMail: mail,
-        userName: "Test",
+        userName: name,
         playerLevel: 1,
         money: 0
     }})
+    revalidatePath("/")
 }
