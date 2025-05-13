@@ -17,10 +17,11 @@ datasource db {
 
 model Save {
   id         Int                @id @default(autoincrement())
-  userMail       String
-  userName  String
+  userMail       String @unique
+  userName  String[]
   pokemons   SavePokemonLink[]
   playerLevel Int
+  playerXp    Int
   money   Int
  
   objects SaveObjectLink[]
