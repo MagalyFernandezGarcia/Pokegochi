@@ -18,7 +18,7 @@ datasource db {
 model Save {
   id         Int                @id @default(autoincrement())
   userMail       String @unique
-  userName  String[]
+  userNames UserName[]
   pokemons   SavePokemonLink[]
   playerLevel Int
   playerXp    Int
@@ -64,5 +64,12 @@ model SaveObjectLink {
   @@id([saveId, objectId]) 
 }
 
+model UserName {
+  id      String @id @default(cuid())
+  name    String
+  save    Save   @relation(fields: [saveId], references: [id])
+  saveId  Int
 
+  @@unique([name, saveId])
+}
 
