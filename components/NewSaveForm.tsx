@@ -19,7 +19,7 @@ export default function NewSaveForm({mail}: {mail: string}) {
     
     await createSave(mail,data.name);
     toast.success("Save created");
-    router.back()
+    router.replace(`/${data.name}/main-screen`);
     
 
   }

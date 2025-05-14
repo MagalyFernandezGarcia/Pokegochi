@@ -2,11 +2,11 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { findUser } from "./findUser";
 
-export async function createSave( name: string) {
-  const user = await findUser();
-  const mail = user.userMail;
+
+export async function createSave( mail: string, name: string) {
+
+ 
 
   const dubble = await prisma.userName.findFirst({
     where: {

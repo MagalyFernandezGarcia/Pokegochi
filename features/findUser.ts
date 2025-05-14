@@ -6,6 +6,8 @@ import prisma from "@/lib/prisma";
 
 export async function findUser (){
     const session = await auth()
+    console.log(session);
+    
      const userMail = session?.user?.email;
 
   if (!userMail) {
@@ -16,8 +18,6 @@ export async function findUser (){
       userMail: userMail,
     },
   })
-  if (!user) {
-    throw new Error("User not found");
-  }
+  
   return user
 }
