@@ -15,10 +15,10 @@ export async function getSave() {
         userNames: true,
       },
     });
-    console.log(saves);
+    
     
 
     return saves;
   }
-  // return [];
+  return [];
 }
