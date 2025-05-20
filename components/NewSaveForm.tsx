@@ -5,11 +5,10 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { createSave } from "@/features/createSave";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 
-export default function NewSaveForm({mail}: {mail: string}) {
+export default function NewSaveForm({mail, close}: {mail: string, close: () => void}) {
     const router = useRouter();
    
   const form = useForm<{ name: string }>();
@@ -18,7 +17,7 @@ export default function NewSaveForm({mail}: {mail: string}) {
     console.log("form");
     
     await createSave(mail,data.name);
-    toast.success("Save created");
+    close()
     router.replace(`/${data.name}/start-screen`);
     
 
@@ -32,7 +31,7 @@ export default function NewSaveForm({mail}: {mail: string}) {
           render={({ field }) => (
             <div className="flex flex-col gap-4">
               <Label>What's your name ?</Label>
-              <Input placeholder="Red" {...field}  value={field.value ?? ""} />
+              <Input placeholder="Red" {...field} value={field.value ?? ""} />
             </div>
           )}
         />

@@ -32,6 +32,12 @@ model Save {
 model Pokemon {
   id         Int                @id @default(autoincrement())
   name       String @unique
+  pv  Int
+  happiness Int @default(1) 
+  hunger Int @default(1) 
+  cleanliness Int @default(1) 
+  level Int @default(0) 
+  difficulty Int @default(0) 
   saves      SavePokemonLink[]
 }
 

@@ -2,9 +2,9 @@
 
 
 import prisma from "@/lib/prisma"
-import { revalidatePath } from "next/cache"
 
-export async function addPokemonToSave(saveName: string, pokemonName: string) {
+
+export async function addPokemonToSave(saveName: string, pokemonName: string, pv : number) {
 
    const pokemon = await prisma.pokemon.upsert({
   where: {
@@ -13,6 +13,8 @@ export async function addPokemonToSave(saveName: string, pokemonName: string) {
   update: {}, 
   create: {
     name: pokemonName,
+    pv
+
   },
 });
 
@@ -37,6 +39,6 @@ export async function addPokemonToSave(saveName: string, pokemonName: string) {
       pokemonId: pokemon.id,
     },
   });
-    revalidatePath(`/${saveName}/main-screen`);
+   
 
 }

@@ -44,5 +44,5 @@ export async function createSave( mail: string, name: string) {
 
   
 
-  revalidatePath("/");
+  
 }

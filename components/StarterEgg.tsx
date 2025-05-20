@@ -17,7 +17,7 @@ export default   function StarterEgg({saveName}: {saveName: string}) {
    const randomNumber = () => Math.floor(Math.random() * startersList.length);
    
    const clickEgg = async  () => {
-    const starter = await getPokemon(startersList[randomNumber()])
+    const starter = await getPokemon({pkmNr: startersList[randomNumber()]})
     setStarter(starter)
      
     
@@ -25,7 +25,7 @@ export default   function StarterEgg({saveName}: {saveName: string}) {
 
    const addPkmn = async () => {
     if(!starter) return
-    await addPokemonToSave(saveName, starter.name)
+    await addPokemonToSave(saveName, starter.name, starter.stats[0].base_stat);
     router.replace(`/${saveName}/main-screen`);
     
    }

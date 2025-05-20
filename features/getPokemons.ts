@@ -11,9 +11,9 @@ import axios from "axios"
 //     return resultsToJson
 // }
 
-export async function getPokemon(pkmNr: number) {
+export async function getPokemon( options :{pkmNr?: number, pkmName?: string}) {
   
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pkmNr}`)
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${options.pkmNr || options.pkmName}`)
     const data = await response.data
 
     return data
