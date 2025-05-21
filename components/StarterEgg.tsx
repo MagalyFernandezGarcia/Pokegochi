@@ -6,6 +6,7 @@ import { Pokemon } from "@/types/pokemon";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "./ui/button";
 
 
 export default   function StarterEgg({saveName}: {saveName: string}) {
@@ -44,7 +45,7 @@ export default   function StarterEgg({saveName}: {saveName: string}) {
       
       />
       <div>{starter ? `Congrats ! You have ${starter.name} !` : "Tap on the egg to discover your first pokemon !"}</div>
-      {starter && <button onClick={addPkmn}>Add to save</button>}
+      {starter && <Button onClick={addPkmn}>Add to save</Button>}
     </section>
   );
 }
