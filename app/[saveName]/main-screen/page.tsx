@@ -1,5 +1,4 @@
 import { ProgressBar } from "@/components/ProgressBar";
-import { getPokemonFromSave } from "@/features/getPokemonFromSave";
 import { getPokemon } from "@/features/getPokemons";
 import { getSave } from "@/features/getSave";
 import { Pokemon } from "@/types/pokemon";
@@ -14,13 +13,14 @@ export default async function MainScreen({
 }) {
   const params = await paramsPromise;
   const save = await getSave();
-  const pkmnArray = await getPokemonFromSave(params.saveName);
-  const currentPkmn = pkmnArray[pkmnArray.length - 1];
+  const pkmnArray = save[0].pokemons;
+  const currentPkmn = pkmnArray[pkmnArray.length - 1].pokemon;
   if (pkmnArray.length === 0)
     return redirect(`/${params.saveName}/start-screen`);
   const lastPkmn: Pokemon = await getPokemon({
     pkmName: currentPkmn.name,
   });
+  const saveObjects = save[0].objects;
 
   const happyMeter = () => {
     const size = 40;
@@ -69,8 +69,22 @@ export default async function MainScreen({
           Hunger
         </ProgressBar>
         <ProgressBar current={currentPkmn.cleanliness} max={100}>
-          Care
+          Cleanliness
         </ProgressBar>
+      </section>
+      <section className="flex gap-4">
+        {saveObjects.map((object) => {
+          return (
+            <div key={object.object.id}>
+              <Image
+                src={object.object.imgUrl}
+                alt={object.object.name}
+                width={100}
+                height={100}
+              />
+            </div>
+          );
+        })}
       </section>
     </main>
   );

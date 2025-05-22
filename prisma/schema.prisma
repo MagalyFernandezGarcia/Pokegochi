@@ -14,68 +14,67 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Save {
-  id         Int                @id @default(autoincrement())
-  userMail       String @unique
-  userNames UserName[]
-  pokemons   SavePokemonLink[]
+  id          Int               @id @default(autoincrement())
+  userMail    String            @unique
+  userNames   UserName[]
+  pokemons    SavePokemonLink[]
   playerLevel Int
   playerXp    Int
-  money   Int
- 
+  money       Int
+
   objects SaveObjectLink[]
-
-
 }
 
 model Pokemon {
-  id         Int                @id @default(autoincrement())
-  name       String @unique
-  pv  Int
-  happiness Int @default(1) 
-  hunger Int @default(1) 
-  cleanliness Int @default(1) 
-  level Int @default(0) 
-  difficulty Int @default(0) 
-  saves      SavePokemonLink[]
+  id          Int               @id @default(autoincrement())
+  name        String            @unique
+  pv          Int
+  happiness   Int               @default(1)
+  hunger      Int               @default(1)
+  cleanliness Int               @default(1)
+  level       Int               @default(0)
+  difficulty  Int               @default(0)
+  saves       SavePokemonLink[]
 }
 
-model Object{
-  id     Int    @id @default(autoincrement())
-  name  String
-  price Int
-  stock Int
-  level Int
-   saves  SaveObjectLink[]
+model Object {
+  id          Int              @id @default(autoincrement())
+  name        String
+  imgUrl      String
+  price       Int
+  stock       Int
+  level       Int
+  description String
+  stats       String
+  saves       SaveObjectLink[]
 }
 
 model SavePokemonLink {
-  saveId     Int
-  pokemonId  Int
+  saveId    Int
+  pokemonId Int
 
-  save       Save     @relation(fields: [saveId], references: [id])
-  pokemon    Pokemon  @relation(fields: [pokemonId], references: [id])
+  save    Save    @relation(fields: [saveId], references: [id])
+  pokemon Pokemon @relation(fields: [pokemonId], references: [id])
 
-  @@id([saveId, pokemonId]) 
+  @@id([saveId, pokemonId])
 }
 
 model SaveObjectLink {
   saveId   Int
   objectId Int
 
-  save     Save   @relation(fields: [saveId], references: [id])
-  object   Object @relation(fields: [objectId], references: [id])
+  save   Save   @relation(fields: [saveId], references: [id])
+  object Object @relation(fields: [objectId], references: [id])
 
-  @@id([saveId, objectId]) 
+  @@id([saveId, objectId])
 }
 
 model UserName {
-  id      String @id @default(cuid())
-  name    String
-  save    Save   @relation(fields: [saveId], references: [id])
-  saveId  Int
+  id     String @id @default(cuid())
+  name   String
+  save   Save   @relation(fields: [saveId], references: [id])
+  saveId Int
 
   @@unique([name, saveId])
 }
-

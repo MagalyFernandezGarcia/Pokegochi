@@ -13,10 +13,18 @@ export async function getSave() {
       },
       include: {
         userNames: true,
+        objects: {
+          include: {
+            object: true,
+          },
+        },
+        pokemons: {
+          include: {
+            pokemon: true,
+          },
+        },
       },
     });
-    
-    
 
     return saves;
   }

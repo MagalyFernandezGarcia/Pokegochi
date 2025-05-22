@@ -1,27 +1,22 @@
-"use server"
+"use server";
 
-import prisma from "@/lib/prisma"
-import { revalidatePath } from "next/cache"
+import prisma from "@/lib/prisma";
 
 export async function getPokemonFromSave(saveName: string) {
-      const pokemons = await prisma.savePokemonLink.findMany({
-        where: {
-            save: {
-                userNames: {
-                    some: {
-                        name: saveName,
-                    },
-                },
-            },
+  const pokemons = await prisma.savePokemonLink.findMany({
+    where: {
+      save: {
+        userNames: {
+          some: {
+            name: saveName,
+          },
         },
-        include: {
-            pokemon: true,
-        },
-    });
-    
-    
-    return pokemons.map(link => link.pokemon);
+      },
+    },
+    include: {
+      pokemon: true,
+    },
+  });
 
-    
-
+  return pokemons.map((link) => link.pokemon);
 }
