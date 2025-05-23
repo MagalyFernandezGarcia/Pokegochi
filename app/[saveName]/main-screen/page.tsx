@@ -1,4 +1,5 @@
 import { ProgressBar } from "@/components/ProgressBar";
+import ToolButton from "@/components/ToolButton";
 import { getPokemon } from "@/features/getPokemons";
 import { getSave } from "@/features/getSave";
 import { Pokemon } from "@/types/pokemon";
@@ -14,20 +15,22 @@ export default async function MainScreen({
   const params = await paramsPromise;
   const save = await getSave();
   const pkmnArray = save[0].pokemons;
-  const currentPkmn = pkmnArray[pkmnArray.length - 1].pokemon;
+
+  const currentPkmn = pkmnArray[pkmnArray.length - 1];
+
   if (pkmnArray.length === 0)
     return redirect(`/${params.saveName}/start-screen`);
   const lastPkmn: Pokemon = await getPokemon({
-    pkmName: currentPkmn.name,
+    pkmName: currentPkmn.pokemon.name,
   });
-  const saveObjects = save[0].objects;
+  const saveitems = save[0].items;
 
   const happyMeter = () => {
     const size = 40;
     const totalStats =
       currentPkmn.happiness +
       currentPkmn.hunger +
-      currentPkmn.pv +
+      currentPkmn.hpCurrent +
       currentPkmn.cleanliness;
     const average = totalStats / 4;
     if (average < 10) return <Angry size={size} color="red" />;
@@ -59,7 +62,7 @@ export default async function MainScreen({
         </div>
       </section>
       <section className="flex gap-4">
-        <ProgressBar current={currentPkmn.pv} max={lastPkmn.stats[0].base_stat}>
+        <ProgressBar current={currentPkmn.hpCurrent} max={currentPkmn.hpBase}>
           HP
         </ProgressBar>
         <ProgressBar current={currentPkmn.happiness} max={100}>
@@ -72,16 +75,26 @@ export default async function MainScreen({
           Cleanliness
         </ProgressBar>
       </section>
-      <section className="flex gap-4">
-        {saveObjects.map((object) => {
+      <section className="flex gap-  pt-20">
+        {saveitems.map((item) => {
           return (
-            <div key={object.object.id}>
-              <Image
-                src={object.object.imgUrl}
-                alt={object.object.name}
-                width={100}
-                height={100}
-              />
+            <div
+              key={item.item.id}
+              className="flex flex-col items-center gap-4"
+            >
+              <ToolButton
+                quantity={item.quantity}
+                saveName={params.saveName}
+                currentItem={item.item}
+                pokemonName={currentPkmn.pokemon.name}
+              >
+                <Image
+                  src={item.item.imgUrl}
+                  alt={item.item.name}
+                  width={60}
+                  height={60}
+                />
+              </ToolButton>
             </div>
           );
         })}

@@ -7,7 +7,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { addObjectsToSave } from "@/features/addObjectsToSave";
+import { addItemsToSave } from "@/features/addItemsToSave";
+import { addItems } from "@/features/addItems";
 
 export default function StarterEgg({ saveName }: { saveName: string }) {
   const [starter, setStarter] = useState<Pokemon>();
@@ -21,11 +22,12 @@ export default function StarterEgg({ saveName }: { saveName: string }) {
   };
 
   const addPkmn = async () => {
+    // await addItems();
     if (!starter) return;
     await addPokemonToSave(saveName, starter.name, starter.stats[0].base_stat);
-    await addObjectsToSave({
+    await addItemsToSave({
       saveName,
-      objects: ["Basic Sponge", "Old Toy", "Little bag of food"],
+      items: ["Basic Sponge", "Old Toy", "Little bag of food"],
     });
     router.replace(`/${saveName}/main-screen`);
   };

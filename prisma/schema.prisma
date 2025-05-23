@@ -23,51 +23,54 @@ model Save {
   playerXp    Int
   money       Int
 
-  objects SaveObjectLink[]
+  items SaveItemLink[]
 }
 
 model Pokemon {
-  id          Int               @id @default(autoincrement())
-  name        String            @unique
-  pv          Int
-  happiness   Int               @default(1)
-  hunger      Int               @default(1)
-  cleanliness Int               @default(1)
-  level       Int               @default(0)
-  difficulty  Int               @default(0)
-  saves       SavePokemonLink[]
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  saves SavePokemonLink[]
 }
 
-model Object {
-  id          Int              @id @default(autoincrement())
+model Item {
+  id          Int            @id @default(autoincrement())
   name        String
   imgUrl      String
   price       Int
   stock       Int
   level       Int
   description String
-  stats       String
-  saves       SaveObjectLink[]
+  stats       Json
+  saves       SaveItemLink[]
 }
 
 model SavePokemonLink {
-  saveId    Int
-  pokemonId Int
+  id          Int     @id @default(autoincrement())
+  save        Save    @relation(fields: [saveId], references: [id])
+  saveId      Int
+  pokemon     Pokemon @relation(fields: [pokemonId], references: [id])
+  pokemonId   Int
+  hpCurrent   Int
+  hpBase      Int
+  happiness   Int     @default(1)
+  hunger      Int     @default(1)
+  cleanliness Int     @default(1)
+  level       Int     @default(0)
+  difficulty  Int     @default(0)
 
-  save    Save    @relation(fields: [saveId], references: [id])
-  pokemon Pokemon @relation(fields: [pokemonId], references: [id])
-
-  @@id([saveId, pokemonId])
+  @@unique([saveId, pokemonId])
 }
 
-model SaveObjectLink {
+model SaveItemLink {
   saveId   Int
-  objectId Int
+  itemId   Int
+  quantity Int
 
-  save   Save   @relation(fields: [saveId], references: [id])
-  object Object @relation(fields: [objectId], references: [id])
+  save Save @relation(fields: [saveId], references: [id])
+  item Item @relation(fields: [itemId], references: [id])
 
-  @@id([saveId, objectId])
+  @@id([saveId, itemId])
 }
 
 model UserName {

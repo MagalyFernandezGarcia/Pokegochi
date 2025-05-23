@@ -1,22 +1,21 @@
-"use server"
+"use server";
 
+import prisma from "@/lib/prisma";
 
-import prisma from "@/lib/prisma"
-
-
-export async function addPokemonToSave(saveName: string, pokemonName: string, pv : number) {
-
-   const pokemon = await prisma.pokemon.upsert({
-  where: {
-    name: pokemonName, 
-  },
-  update: {}, 
-  create: {
-    name: pokemonName,
-    pv
-
-  },
-});
+export async function addPokemonToSave(
+  saveName: string,
+  pokemonName: string,
+  pv: number
+) {
+  const pokemon = await prisma.pokemon.upsert({
+    where: {
+      name: pokemonName,
+    },
+    update: {},
+    create: {
+      name: pokemonName,
+    },
+  });
 
   const saveId = await prisma.save.findFirst({
     where: {
@@ -37,8 +36,8 @@ export async function addPokemonToSave(saveName: string, pokemonName: string, pv
     data: {
       saveId: saveId.id,
       pokemonId: pokemon.id,
+      hpBase: pv,
+      hpCurrent: pv,
     },
   });
-   
-
 }

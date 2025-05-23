@@ -13,9 +13,9 @@ export async function getSave() {
       },
       include: {
         userNames: true,
-        objects: {
+        items: {
           include: {
-            object: true,
+            item: true,
           },
         },
         pokemons: {

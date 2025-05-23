@@ -2,8 +2,8 @@
 
 import prisma from "@/lib/prisma";
 
-export async function addObjects() {
-  await prisma.object.createMany({
+export async function addItems() {
+  await prisma.item.createMany({
     data: [
       {
         name: "Basic Sponge",
@@ -12,7 +12,7 @@ export async function addObjects() {
         price: 10,
         stock: 10,
         level: 0,
-        stats: "+10 cleanliness",
+        stats: { cleanliness: 10 },
       },
       {
         name: "Old Toy",
@@ -21,16 +21,16 @@ export async function addObjects() {
         price: 20,
         stock: 10,
         level: 0,
-        stats: "+10 happiness",
+        stats: { happiness: 10 },
       },
       {
-        name: "little bag of food",
+        name: "Little bag of food",
         imgUrl: "/food.png",
         description: "A little bag of food. The taste isn't too bad",
         price: 5,
         stock: 30,
         level: 0,
-        stats: "+10 hunger",
+        stats: { hunger: 10 },
       },
     ],
   });
