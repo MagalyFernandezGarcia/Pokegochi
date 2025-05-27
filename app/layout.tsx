@@ -3,8 +3,9 @@ import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { LogOut, ShoppingCart } from "lucide-react";
 import { auth, signOut } from "@/auth";
+import { getSave } from "@/features/getSave";
 
 export const metadata: Metadata = {
   title: "PokeGochi",
@@ -19,6 +20,8 @@ export default async function RootLayout({
   modal: React.ReactNode;
 }>) {
   const session = await auth();
+  const saveName = await getSave();
+
   return (
     <html lang="en">
       <body className=" h-screen w-screen ">
@@ -31,6 +34,13 @@ export default async function RootLayout({
               height={50}
             />
           </Link>
+          {session && (
+            <Link href={`/${saveName[0].userNames[0].name}/shop`}>
+              <Button variant="outline">
+                <ShoppingCart />
+              </Button>
+            </Link>
+          )}
           {session && (
             <form
               action={async () => {

@@ -31,7 +31,7 @@ export default function ToolButton({
   };
   return (
     <div>
-      <Button variant="invisible" onClick={removeQuantity}>
+      <Button variant="invisible" onClick={removeQuantity} disabled={!quantity}>
         {children}
       </Button>{" "}
       <div>{quantity}</div>

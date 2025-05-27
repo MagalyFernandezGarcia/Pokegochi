@@ -7,8 +7,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { addItemsToSave } from "@/features/addItemsToSave";
-import { addItems } from "@/features/addItems";
+import { addItemsToSave } from "@/features/items/addItemsToSave";
+import { addItems } from "@/features/items/addItems";
 
 export default function StarterEgg({ saveName }: { saveName: string }) {
   const [starter, setStarter] = useState<Pokemon>();
