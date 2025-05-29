@@ -48,7 +48,7 @@ export default async function RootLayout({
                 await signOut({ redirectTo: "/" });
               }}
             >
-              <Button variant="secondary">
+              <Button variant="secondary" className="mr-4">
                 <LogOut color="black" />
               </Button>
             </form>

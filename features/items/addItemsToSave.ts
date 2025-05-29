@@ -1,7 +1,7 @@
 "use server";
 
+import { getSaveAndItems } from "@/features/getSaveAndItems";
 import prisma from "@/lib/prisma";
-import { getSaveAndItems } from "./getSaveAndItems";
 
 export async function addItemsToSave({
   saveName,
@@ -12,9 +12,9 @@ export async function addItemsToSave({
 }) {
   const { save, items: itemsToAdd } = await getSaveAndItems(saveName, items);
 
-  const data = itemsToAdd.map((obj) => ({
+  const data = itemsToAdd.map((item) => ({
     saveId: save.id,
-    itemId: obj.id,
+    itemId: item.id,
     quantity: 10,
   }));
   await prisma.saveItemLink.createMany({

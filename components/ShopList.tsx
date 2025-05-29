@@ -8,6 +8,10 @@ import {
 } from "./ui/card";
 import { Button } from "./ui/button";
 import { Dispatch, SetStateAction } from "react";
+import { removeUnitFromShop } from "@/features/items/removeUnitFromShop";
+import { addItemsToSave } from "@/features/items/addItemsToSave";
+import { getSave } from "@/features/getSave";
+import { updateSaveItems } from "@/features/items/updateSaveItems";
 
 export default function ShopList({
   items,
@@ -27,6 +31,23 @@ export default function ShopList({
     count,
   }));
 
+  const buyAll = async () => {
+    const save = await getSave();
+
+    await removeUnitFromShop(
+      "Magaly",
+      Object.keys(countItems),
+      Object.values(countItems)
+    );
+    await updateSaveItems(
+      "Magaly",
+      Object.keys(countItems),
+      Object.values(countItems)
+    );
+
+    onSetPickedItems([]);
+  };
+
   return (
     <Card className="w-1/3">
       <CardHeader className="w-full text-center">
@@ -45,7 +66,7 @@ export default function ShopList({
             Total: {items.reduce((acc, item) => acc + item.price, 0)} po
           </div>
           <div>
-            <Button>Buy</Button>{" "}
+            <Button onClick={buyAll}>Buy</Button>{" "}
             <Button variant="secondary" onClick={() => onSetPickedItems([])}>
               Clear All
             </Button>

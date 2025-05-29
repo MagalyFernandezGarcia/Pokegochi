@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
@@ -17,25 +11,23 @@ datasource db {
 model Save {
   id          Int               @id @default(autoincrement())
   userMail    String            @unique
-  userNames   UserName[]
-  pokemons    SavePokemonLink[]
   playerLevel Int
   playerXp    Int
   money       Int
-
-  items SaveItemLink[]
+  items       SaveItemLink[]
+  pokemons    SavePokemonLink[]
+  userNames   UserName[]
 }
 
 model Pokemon {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-
+  id    Int               @id @default(autoincrement())
+  name  String            @unique
   saves SavePokemonLink[]
 }
 
 model Item {
   id          Int            @id @default(autoincrement())
-  name        String
+  name        String         @unique
   imgUrl      String
   price       Int
   stock       Int
@@ -47,9 +39,7 @@ model Item {
 
 model SavePokemonLink {
   id          Int     @id @default(autoincrement())
-  save        Save    @relation(fields: [saveId], references: [id])
   saveId      Int
-  pokemon     Pokemon @relation(fields: [pokemonId], references: [id])
   pokemonId   Int
   hpCurrent   Int
   hpBase      Int
@@ -58,6 +48,8 @@ model SavePokemonLink {
   cleanliness Int     @default(1)
   level       Int     @default(0)
   difficulty  Int     @default(0)
+  pokemon     Pokemon @relation(fields: [pokemonId], references: [id])
+  save        Save    @relation(fields: [saveId], references: [id])
 
   @@unique([saveId, pokemonId])
 }
@@ -66,9 +58,8 @@ model SaveItemLink {
   saveId   Int
   itemId   Int
   quantity Int
-
-  save Save @relation(fields: [saveId], references: [id])
-  item Item @relation(fields: [itemId], references: [id])
+  item     Item @relation(fields: [itemId], references: [id])
+  save     Save @relation(fields: [saveId], references: [id])
 
   @@id([saveId, itemId])
 }
@@ -76,8 +67,8 @@ model SaveItemLink {
 model UserName {
   id     String @id @default(cuid())
   name   String
-  save   Save   @relation(fields: [saveId], references: [id])
   saveId Int
+  save   Save   @relation(fields: [saveId], references: [id])
 
   @@unique([name, saveId])
 }
