@@ -41,9 +41,14 @@ export default async function MainScreen({
 
   return (
     <main className="flex flex-col  items-center h-full ">
-      <section className="flex gap-4 self-start pt-4 pl-4">
-        <div>Player : {params.saveName}</div>{" "}
-        <div> Level : {save?.[0].playerLevel}</div>
+      <section className="flex flex-col self-start pt-4 pl-4">
+        <div className="flex gap-4  ">
+          <div>Player : {params.saveName}</div>{" "}
+          <div> Level : {save?.[0].playerLevel}</div>
+        </div>
+        <div>
+          <div> PO : {save?.[0].money}</div>
+        </div>
       </section>
 
       <section className="flex flex-col justify-center items-center h-1/3 ">
@@ -86,7 +91,7 @@ export default async function MainScreen({
                 quantity={item.quantity}
                 saveName={params.saveName}
                 currentItem={item.item}
-                pokemonName={currentPkmn.pokemon.name}
+                currentPokemon={currentPkmn}
               >
                 <Image
                   src={item.item.imgUrl}

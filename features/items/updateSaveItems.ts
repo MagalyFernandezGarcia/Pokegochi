@@ -29,7 +29,9 @@ export async function updateSaveItems(
         },
       },
       data: {
-        quantity: quantities[index],
+        quantity: {
+          increment: quantities[index],
+        },
       },
     });
   });

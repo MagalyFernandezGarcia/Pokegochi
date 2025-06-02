@@ -15,10 +15,12 @@ export default async function Shop({
   return (
     <>
       <Link href={`/${params.saveName}/main-screen`}>
-        <House />
+        <div className=" pl-4 pt-4">
+          <House />
+        </div>
       </Link>
       <section>
-        <ShopContent itemsList={items} />
+        <ShopContent itemsList={items} saveName={params.saveName} />
       </section>
     </>
   );

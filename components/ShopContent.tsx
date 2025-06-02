@@ -5,7 +5,13 @@ import ItemCard from "./ItemCard";
 import { useState } from "react";
 import ShopList from "./ShopList";
 
-export default function ShopContent({ itemsList }: { itemsList: Item[] }) {
+export default function ShopContent({
+  itemsList,
+  saveName,
+}: {
+  itemsList: Item[];
+  saveName: string;
+}) {
   const [pickedItems, setPickedItems] = useState<Item[]>([]);
 
   const shopButtonDisplay = itemsList.map((item) => {
@@ -14,11 +20,17 @@ export default function ShopContent({ itemsList }: { itemsList: Item[] }) {
     );
   });
   return (
-    <>
-      <section className="flex flex-wrap justify-center gap-4">
+    <main className="flex justify-center">
+      <section className="flex flex-wrap justify-center gap-4 w-800">
         {shopButtonDisplay}
       </section>
-      <ShopList items={pickedItems} onSetPickedItems={setPickedItems} />
-    </>
+      <section>
+        <ShopList
+          items={pickedItems}
+          onSetPickedItems={setPickedItems}
+          saveName={saveName}
+        />
+      </section>
+    </main>
   );
 }
