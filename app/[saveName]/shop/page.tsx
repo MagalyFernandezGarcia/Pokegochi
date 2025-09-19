@@ -1,6 +1,7 @@
 import ItemCard from "@/components/ItemCard";
 import ShopContent from "@/components/ShopContent";
 import { getItems } from "@/features/items/getItems";
+import { Itemslist } from "@/lib/itemsList";
 import { House } from "lucide-react";
 import Link from "next/link";
 
@@ -11,6 +12,10 @@ export default async function Shop({
 }) {
   const params = await paramsPromise;
   const items = await getItems();
+  const mergedItems = items.map((item) => {
+    const mergeItems = Itemslist(item.dbName);
+    return { ...mergeItems, ...item };
+  });
 
   return (
     <>
@@ -20,7 +25,7 @@ export default async function Shop({
         </div>
       </Link>
       <section>
-        <ShopContent itemsList={items} saveName={params.saveName} />
+        <ShopContent itemsList={mergedItems} saveName={params.saveName} />
       </section>
     </>
   );

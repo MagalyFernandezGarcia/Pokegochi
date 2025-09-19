@@ -12,6 +12,8 @@ import { removeUnitFromShop } from "@/features/items/removeUnitFromShop";
 import { getSave } from "@/features/getSave";
 import { updateSaveItems } from "@/features/items/updateSaveItems";
 import { updateMoney } from "@/features/updateMoney";
+import { Itemslist } from "@/lib/itemsList";
+import { MergedItem } from "@/types/mergedItem";
 
 export default function ShopList({
   items,
@@ -22,7 +24,12 @@ export default function ShopList({
   onSetPickedItems: Dispatch<SetStateAction<Item[]>>;
   saveName: string;
 }) {
-  const countItems = items.reduce((acc: Record<string, number>, item) => {
+  const mergedItems: MergedItem[] = items.map((item) => {
+    const mergeItems = Itemslist(item.dbName);
+    return { ...mergeItems, ...item };
+  });
+
+  const countItems = mergedItems.reduce((acc: Record<string, number>, item) => {
     if (item.name in acc) acc[item.name]++;
     else acc[item.name] = 1;
     return acc;
@@ -32,7 +39,7 @@ export default function ShopList({
     name,
     count,
   }));
-  const total = items.reduce((acc, item) => acc + item.price, 0);
+  const total = mergedItems.reduce((acc, item) => acc + item.price, 0);
 
   const buyAll = async () => {
     const save = await getSave();

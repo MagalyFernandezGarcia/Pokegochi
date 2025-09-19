@@ -12,6 +12,8 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Dispatch, SetStateAction } from "react";
+import { Itemslist } from "@/lib/itemsList";
+import { MergedItem } from "@/types/mergedItem";
 
 export default function ItemCard({
   item,
@@ -20,20 +22,32 @@ export default function ItemCard({
   item: Item;
   onSetPickedItems: Dispatch<SetStateAction<Item[]>>;
 }) {
+  const mergeItem: MergedItem = {
+    ...Itemslist(item.dbName),
+    ...item,
+  };
+  if (!mergeItem) return null;
   return (
-    <Card key={item.name} className="w-1/6 ">
+    <Card key={item.id} className="w-1/6 ">
       <CardHeader className="flex justify-center w-full text-center">
-        <CardTitle>{item.name}</CardTitle>
+        <CardTitle>{mergeItem.name}</CardTitle>
       </CardHeader>
       <CardContent className="h-full flex flex-col  gap-8">
         <section className="flex justify-center">
-          <Image src={item.imgUrl} alt={item.name} width={50} height={50} />
+          <Image
+            src={mergeItem.url}
+            alt={mergeItem.name}
+            width={50}
+            height={50}
+          />
         </section>
 
         <section className="flex flex-col gap-2 ">
-          <CardDescription className="h-12">{item.description}</CardDescription>
-          <div>{item.price} po</div>
-          <div>{item.stock} in stock</div>
+          <CardDescription className="h-12">
+            {mergeItem.description}
+          </CardDescription>
+          <div>{mergeItem.price} po</div>
+          <div>{mergeItem.dbStock} in stock</div>
         </section>
       </CardContent>
       <CardFooter className="flex flex-col items-center">

@@ -2,6 +2,8 @@ import { ProgressBar } from "@/components/ProgressBar";
 import ToolButton from "@/components/ToolButton";
 import { getPokemon } from "@/features/getPokemons";
 import { getSave } from "@/features/getSave";
+import { Itemslist } from "@/lib/itemsList";
+import { MergedItem } from "@/types/mergedItem";
 import { Pokemon } from "@/types/pokemon";
 import { Angry, Annoyed, Frown, Smile } from "lucide-react";
 import Image from "next/image";
@@ -82,20 +84,24 @@ export default async function MainScreen({
       </section>
       <section className="flex gap-  pt-20">
         {saveitems.map((item) => {
+          const mergeItem: MergedItem = {
+            ...Itemslist(item.item.dbName),
+            ...item.item,
+          };
           return (
             <div
               key={item.item.id}
               className="flex flex-col items-center gap-4"
             >
               <ToolButton
-                quantity={item.quantity}
+                quantity={mergeItem.dbStock}
                 saveName={params.saveName}
-                currentItem={item.item}
+                currentItem={mergeItem}
                 currentPokemon={currentPkmn}
               >
                 <Image
-                  src={item.item.imgUrl}
-                  alt={item.item.name}
+                  src={mergeItem.url}
+                  alt={mergeItem.name}
                   width={60}
                   height={60}
                 />

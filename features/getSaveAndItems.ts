@@ -19,7 +19,7 @@ export async function getSaveAndItems(saveName: string, itemsNames: string[]) {
 
   const items = await prisma.item.findMany({
     where: {
-      name: {
+      dbName: {
         in: itemsNames,
       },
     },

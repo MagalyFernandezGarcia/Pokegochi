@@ -21,6 +21,7 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   const saveName = await getSave();
+  console.log(session);
 
   return (
     <html lang="en">

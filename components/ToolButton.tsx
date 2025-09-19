@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { withdrawAUnit } from "@/features/items/withdrawAUnit";
 import { Item, SavePokemonLink } from "@/lib/generated/prisma";
 import { updatePokemonStat } from "@/features/updatePokemonStat";
-import { url } from "inspector";
+import { MergedItem } from "@/types/mergedItem";
 
 type Stat = "hpCurrent" | "hunger" | "happiness" | "cleanliness";
 type StatMap = Record<Stat, number>;
@@ -37,7 +37,7 @@ export default function ToolButton({
   children: ReactNode;
   quantity: number;
   saveName: string;
-  currentItem: Item;
+  currentItem: MergedItem;
   currentPokemon: FullPkmn;
 }) {
   const statToModify = currentItem.stats;

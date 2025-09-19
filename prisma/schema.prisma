@@ -26,15 +26,12 @@ model Pokemon {
 }
 
 model Item {
-  id          Int            @id @default(autoincrement())
-  name        String         @unique
-  imgUrl      String
-  price       Int
-  stock       Int
-  level       Int
-  description String
-  stats       Json
-  saves       SaveItemLink[]
+  id     Int    @id @default(autoincrement())
+  dbName String @unique
+
+  dbStock Int
+
+  SaveItemLink SaveItemLink[]
 }
 
 model SavePokemonLink {
@@ -55,11 +52,11 @@ model SavePokemonLink {
 }
 
 model SaveItemLink {
-  saveId   Int
-  itemId   Int
-  quantity Int
-  item     Item @relation(fields: [itemId], references: [id])
-  save     Save @relation(fields: [saveId], references: [id])
+  saveId Int
+  itemId Int
+
+  item Item @relation(fields: [itemId], references: [id])
+  save Save @relation(fields: [saveId], references: [id])
 
   @@id([saveId, itemId])
 }
