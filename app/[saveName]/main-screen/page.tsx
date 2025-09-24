@@ -88,13 +88,14 @@ export default async function MainScreen({
             ...Itemslist(item.item.dbName),
             ...item.item,
           };
+
           return (
             <div
               key={item.item.id}
               className="flex flex-col items-center gap-4"
             >
               <ToolButton
-                quantity={mergeItem.dbStock}
+                quantity={item.dbStock}
                 saveName={params.saveName}
                 currentItem={mergeItem}
                 currentPokemon={currentPkmn}

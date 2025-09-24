@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { LogOut, ShoppingCart } from "lucide-react";
 import { auth, signOut } from "@/auth";
 import { getSave } from "@/features/getSave";
+import { findUser } from "@/features/findUser";
 
 export const metadata: Metadata = {
   title: "PokeGochi",
@@ -21,7 +22,7 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   const saveName = await getSave();
-  console.log(session);
+  const user = session ? await findUser() : null;
 
   return (
     <html lang="en">
@@ -35,7 +36,7 @@ export default async function RootLayout({
               height={50}
             />
           </Link>
-          {session && (
+          {user && (
             <Link href={`/${saveName[0].userNames[0].name}/shop`}>
               <Button variant="outline">
                 <ShoppingCart />

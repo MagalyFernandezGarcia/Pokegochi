@@ -1,4 +1,3 @@
-import ItemCard from "@/components/ItemCard";
 import ShopContent from "@/components/ShopContent";
 import { getItems } from "@/features/items/getItems";
 import { Itemslist } from "@/lib/itemsList";

@@ -14,7 +14,7 @@ export async function updateSaveItems(
   const saveId = save[0].id;
   const items = await prisma.item.findMany({
     where: {
-      name: {
+      dbName: {
         in: itemsName,
       },
     },
@@ -29,7 +29,7 @@ export async function updateSaveItems(
         },
       },
       data: {
-        quantity: {
+        dbStock: {
           increment: quantities[index],
         },
       },

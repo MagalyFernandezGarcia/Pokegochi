@@ -14,7 +14,7 @@ export default function ShopContent({
   itemsList: Item[];
   saveName: string;
 }) {
-  const [pickedItems, setPickedItems] = useState<Item[]>([]);
+  const [pickedItems, setPickedItems] = useState<MergedItem[]>([]);
 
   const shopButtonDisplay = itemsList.map((item) => {
     const mergeItem: MergedItem = {

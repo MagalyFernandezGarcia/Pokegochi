@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 
 export async function withdrawAUnit(saveName: string, itemNames: string[]) {
   const { save, items } = await getSaveAndItems(saveName, itemNames);
+
   for (const obj of items) {
     await prisma.saveItemLink.updateMany({
       where: {
@@ -13,7 +14,7 @@ export async function withdrawAUnit(saveName: string, itemNames: string[]) {
         itemId: obj.id,
       },
       data: {
-        quantity: {
+        dbStock: {
           decrement: 1,
         },
       },

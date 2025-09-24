@@ -1,24 +1,25 @@
 "use server";
 
+import { findUser } from "@/features/findUser";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function removeUnitFromShop(
   saveName: string,
-  itemNames: string[],
-  quantity: number[]
+  itemsBuy: Record<string, { id: number; count: number }>
 ) {
-  const updates = itemNames.map((name, index) => {
-    return prisma.item.update({
-      where: { name },
+  const user = await findUser();
+
+  for (const [name, count] of Object.entries(itemsBuy)) {
+    await prisma.saveItemLink.updateMany({
+      where: { saveId: user?.id, itemId: count.id },
       data: {
-        stock: {
-          decrement: quantity[index],
+        shopStock: {
+          decrement: count.count,
         },
       },
     });
-  });
+  }
 
-  await Promise.all(updates);
   revalidatePath(`/${saveName}/shop`);
 }

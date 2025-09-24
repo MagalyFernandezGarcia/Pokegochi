@@ -19,8 +19,8 @@ export default function ItemCard({
   item,
   onSetPickedItems,
 }: {
-  item: Item;
-  onSetPickedItems: Dispatch<SetStateAction<Item[]>>;
+  item: MergedItem;
+  onSetPickedItems: Dispatch<SetStateAction<MergedItem[]>>;
 }) {
   const mergeItem: MergedItem = {
     ...Itemslist(item.dbName),
@@ -47,7 +47,7 @@ export default function ItemCard({
             {mergeItem.description}
           </CardDescription>
           <div>{mergeItem.price} po</div>
-          <div>{mergeItem.dbStock} in stock</div>
+          <div>{mergeItem.totalStock} in stock</div>
         </section>
       </CardContent>
       <CardFooter className="flex flex-col items-center">

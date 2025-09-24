@@ -1,7 +1,7 @@
 "use client";
 import { addPokemonToSave } from "@/features/addPokemon";
 import { getPokemon } from "@/features/getPokemons";
-import { startersList } from "@/features/startersList";
+import { startersList } from "@/lib/startersList";
 import { Pokemon } from "@/types/pokemon";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

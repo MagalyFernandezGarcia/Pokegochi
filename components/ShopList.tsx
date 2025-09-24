@@ -20,8 +20,8 @@ export default function ShopList({
   onSetPickedItems,
   saveName,
 }: {
-  items: Item[];
-  onSetPickedItems: Dispatch<SetStateAction<Item[]>>;
+  items: MergedItem[];
+  onSetPickedItems: Dispatch<SetStateAction<MergedItem[]>>;
   saveName: string;
 }) {
   const mergedItems: MergedItem[] = items.map((item) => {
@@ -29,11 +29,18 @@ export default function ShopList({
     return { ...mergeItems, ...item };
   });
 
-  const countItems = mergedItems.reduce((acc: Record<string, number>, item) => {
-    if (item.name in acc) acc[item.name]++;
-    else acc[item.name] = 1;
-    return acc;
-  }, {});
+  const countItems = mergedItems.reduce(
+    (acc: Record<string, { id: number; count: number }>, item) => {
+      if (item.name in acc) {
+        acc[item.name].count++;
+        acc[item.name].id = item.id;
+      } else {
+        acc[item.name] = { id: item.id, count: 1 };
+      }
+      return acc;
+    },
+    {}
+  );
 
   const displayList = Object.entries(countItems).map(([name, count]) => ({
     name,
@@ -42,18 +49,12 @@ export default function ShopList({
   const total = mergedItems.reduce((acc, item) => acc + item.price, 0);
 
   const buyAll = async () => {
-    const save = await getSave();
-
-    await removeUnitFromShop(
-      saveName,
-      Object.keys(countItems),
-      Object.values(countItems)
-    );
-    await updateSaveItems(
-      saveName,
-      Object.keys(countItems),
-      Object.values(countItems)
-    );
+    await removeUnitFromShop(saveName, countItems);
+    // await updateSaveItems(
+    //   saveName,
+    //   Object.keys(countItems),
+    //   Object.values(countItems)
+    // );
     await updateMoney(saveName, -total);
 
     onSetPickedItems([]);
@@ -67,7 +68,7 @@ export default function ShopList({
       <CardContent>
         {displayList.map((item) => (
           <div key={item.name}>
-            {item.name} x {item.count}
+            {item.name} x {item.count.count}
           </div>
         ))}
       </CardContent>

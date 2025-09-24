@@ -10,6 +10,7 @@ export const Itemslist = (item: string) => {
         stats: {
           cleanliness: 10,
         },
+
         totalStock: 10,
       };
     case "basicToy":
@@ -22,6 +23,7 @@ export const Itemslist = (item: string) => {
         stats: {
           happiness: 10,
         },
+
         totalStock: 10,
       };
     case "basicFood":
@@ -34,6 +36,7 @@ export const Itemslist = (item: string) => {
         stats: {
           hunger: 10,
         },
+
         totalStock: 30,
       };
     default:
