@@ -12,7 +12,6 @@ type ToMergeItem = {
     happiness?: number;
     hunger?: number;
   };
-
   totalStock: number;
 };
 

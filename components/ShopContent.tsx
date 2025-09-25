@@ -1,6 +1,6 @@
 "use client";
 
-import { Item } from "@/lib/generated/prisma";
+import { Item, SaveItemLink } from "@/lib/generated/prisma";
 import ItemCard from "./ItemCard";
 import { useState } from "react";
 import ShopList from "./ShopList";
@@ -10,9 +10,11 @@ import { MergedItem } from "@/types/mergedItem";
 export default function ShopContent({
   itemsList,
   saveName,
+  shopSave,
 }: {
   itemsList: Item[];
   saveName: string;
+  shopSave: SaveItemLink[];
 }) {
   const [pickedItems, setPickedItems] = useState<MergedItem[]>([]);
 
@@ -27,6 +29,7 @@ export default function ShopContent({
         key={item.dbName}
         item={mergeItem}
         onSetPickedItems={setPickedItems}
+        shopSave={shopSave}
       />
     );
   });

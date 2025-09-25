@@ -50,11 +50,8 @@ export default function ShopList({
 
   const buyAll = async () => {
     await removeUnitFromShop(saveName, countItems);
-    // await updateSaveItems(
-    //   saveName,
-    //   Object.keys(countItems),
-    //   Object.values(countItems)
-    // );
+    await updateSaveItems(saveName, countItems);
+
     await updateMoney(saveName, -total);
 
     onSetPickedItems([]);

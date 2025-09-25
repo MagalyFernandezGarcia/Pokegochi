@@ -2,6 +2,7 @@ import { ProgressBar } from "@/components/ProgressBar";
 import ToolButton from "@/components/ToolButton";
 import { getPokemon } from "@/features/getPokemons";
 import { getSave } from "@/features/getSave";
+import { getSaveItems } from "@/features/items/getSaveItems";
 import { Itemslist } from "@/lib/itemsList";
 import { MergedItem } from "@/types/mergedItem";
 import { Pokemon } from "@/types/pokemon";
@@ -89,13 +90,15 @@ export default async function MainScreen({
             ...item.item,
           };
 
+          const saveLinkitems = item.dbStock;
+
           return (
             <div
               key={item.item.id}
               className="flex flex-col items-center gap-4"
             >
               <ToolButton
-                quantity={item.dbStock}
+                quantity={saveLinkitems}
                 saveName={params.saveName}
                 currentItem={mergeItem}
                 currentPokemon={currentPkmn}

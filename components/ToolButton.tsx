@@ -6,8 +6,6 @@ import { withdrawAUnit } from "@/features/items/withdrawAUnit";
 import { updatePokemonStat } from "@/features/updatePokemonStat";
 import { MergedItem } from "@/types/mergedItem";
 
-type Stat = "hpCurrent" | "hunger" | "happiness" | "cleanliness";
-type StatMap = Record<Stat, number>;
 type FullPkmn = {
   pokemon: {
     name: string;
@@ -41,9 +39,9 @@ export default function ToolButton({
 }) {
   const statToModify = currentItem.stats;
 
-  const removeQuantity = async () => {
-    console.log(currentItem);
+  console.log(quantity);
 
+  const removeQuantity = async () => {
     await withdrawAUnit(saveName, [currentItem.dbName]);
     for (const [key, value] of Object.entries(statToModify)) {
       await updatePokemonStat(

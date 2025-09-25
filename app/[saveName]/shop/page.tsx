@@ -1,5 +1,6 @@
 import ShopContent from "@/components/ShopContent";
 import { getItems } from "@/features/items/getItems";
+import { getSaveItems } from "@/features/items/getSaveItems";
 import { Itemslist } from "@/lib/itemsList";
 import { House } from "lucide-react";
 import Link from "next/link";
@@ -16,6 +17,8 @@ export default async function Shop({
     return { ...mergeItems, ...item };
   });
 
+  const shopSave = await getSaveItems();
+
   return (
     <>
       <Link href={`/${params.saveName}/main-screen`}>
@@ -24,7 +27,11 @@ export default async function Shop({
         </div>
       </Link>
       <section>
-        <ShopContent itemsList={mergedItems} saveName={params.saveName} />
+        <ShopContent
+          itemsList={mergedItems}
+          saveName={params.saveName}
+          shopSave={shopSave}
+        />
       </section>
     </>
   );
