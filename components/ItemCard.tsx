@@ -18,10 +18,12 @@ export default function ItemCard({
   item,
   onSetPickedItems,
   shopSave,
+  playerMoney,
 }: {
   item: MergedItem;
   onSetPickedItems: Dispatch<SetStateAction<MergedItem[]>>;
   shopSave: SaveItemLink[];
+  playerMoney: number;
 }) {
   const itemInShop = shopSave.find((link) => link.itemId === item.id);
 
@@ -42,7 +44,10 @@ export default function ItemCard({
         </section>
       </CardContent>
       <CardFooter className="flex flex-col items-center">
-        <Button onClick={() => onSetPickedItems((prev) => [...prev, item])}>
+        <Button
+          onClick={() => onSetPickedItems((prev) => [...prev, item])}
+          disabled={itemInShop?.shopStock === 0 || playerMoney < item.price}
+        >
           Buy
         </Button>
       </CardFooter>

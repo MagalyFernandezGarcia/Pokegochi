@@ -1,4 +1,3 @@
-import { Item } from "@/lib/generated/prisma";
 import {
   Card,
   CardContent,
@@ -9,7 +8,6 @@ import {
 import { Button } from "./ui/button";
 import { Dispatch, SetStateAction } from "react";
 import { removeUnitFromShop } from "@/features/items/removeUnitFromShop";
-import { getSave } from "@/features/getSave";
 import { updateSaveItems } from "@/features/items/updateSaveItems";
 import { updateMoney } from "@/features/updateMoney";
 import { Itemslist } from "@/lib/itemsList";
@@ -19,10 +17,12 @@ export default function ShopList({
   items,
   onSetPickedItems,
   saveName,
+  playerMoney,
 }: {
   items: MergedItem[];
   onSetPickedItems: Dispatch<SetStateAction<MergedItem[]>>;
   saveName: string;
+  playerMoney: number;
 }) {
   const mergedItems: MergedItem[] = items.map((item) => {
     const mergeItems = Itemslist(item.dbName);
@@ -73,7 +73,9 @@ export default function ShopList({
         <CardFooter className="flex flex-col gap-4">
           <div>Total: {total} po</div>
           <div>
-            <Button onClick={buyAll}>Buy</Button>{" "}
+            <Button onClick={buyAll} disabled={playerMoney < total}>
+              Buy
+            </Button>{" "}
             <Button variant="secondary" onClick={() => onSetPickedItems([])}>
               Clear All
             </Button>

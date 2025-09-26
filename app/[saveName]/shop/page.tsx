@@ -1,4 +1,5 @@
 import ShopContent from "@/components/ShopContent";
+import { getSave } from "@/features/getSave";
 import { getItems } from "@/features/items/getItems";
 import { getSaveItems } from "@/features/items/getSaveItems";
 import { Itemslist } from "@/lib/itemsList";
@@ -18,6 +19,8 @@ export default async function Shop({
   });
 
   const shopSave = await getSaveItems();
+  const save = await getSave();
+  const playerMoney = save[0].money;
 
   return (
     <>
@@ -31,6 +34,7 @@ export default async function Shop({
           itemsList={mergedItems}
           saveName={params.saveName}
           shopSave={shopSave}
+          playerMoney={playerMoney}
         />
       </section>
     </>

@@ -11,10 +11,12 @@ export default function ShopContent({
   itemsList,
   saveName,
   shopSave,
+  playerMoney,
 }: {
   itemsList: Item[];
   saveName: string;
   shopSave: SaveItemLink[];
+  playerMoney: number;
 }) {
   const [pickedItems, setPickedItems] = useState<MergedItem[]>([]);
 
@@ -30,6 +32,7 @@ export default function ShopContent({
         item={mergeItem}
         onSetPickedItems={setPickedItems}
         shopSave={shopSave}
+        playerMoney={playerMoney}
       />
     );
   });
@@ -43,6 +46,7 @@ export default function ShopContent({
           items={pickedItems}
           onSetPickedItems={setPickedItems}
           saveName={saveName}
+          playerMoney={playerMoney}
         />
       </section>
     </main>
