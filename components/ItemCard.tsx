@@ -2,7 +2,7 @@
 
 import { Button } from "./ui/button";
 import Image from "next/image";
-import { Item, SaveItemLink } from "@/lib/generated/prisma";
+import { SaveItemLink } from "@/lib/generated/prisma";
 import {
   Card,
   CardContent,

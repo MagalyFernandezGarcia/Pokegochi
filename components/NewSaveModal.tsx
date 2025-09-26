@@ -1,12 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import NewSaveForm from "./NewSaveForm";
 
-export default function NewSaveModal({mail}: {mail: string}) {
-    const [open, setOpen] =useState(true);
+export default function NewSaveModal({ mail }: { mail: string }) {
+  const [open, setOpen] = useState(true);
   const router = useRouter();
   const handleClose = () => setOpen(false);
   return (
@@ -15,7 +15,7 @@ export default function NewSaveModal({mail}: {mail: string}) {
         <DialogHeader>
           <DialogTitle>Welcome to Pokegochi !</DialogTitle>
         </DialogHeader>
-        <NewSaveForm mail={mail} close={handleClose}/>
+        <NewSaveForm mail={mail} close={handleClose} />
       </DialogContent>
     </Dialog>
   );

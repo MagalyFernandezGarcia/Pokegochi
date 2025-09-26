@@ -1,14 +1,14 @@
 import { ProgressBar } from "@/components/ProgressBar";
+import RunAwayPkmnModal from "@/components/RunAwayPkmnModal";
 import ToolButton from "@/components/ToolButton";
-import { getPokemon } from "@/features/getPokemons";
+import { getPokemon } from "@/features/pokemons/getPokemons";
 import { getSave } from "@/features/getSave";
-import { getSaveItems } from "@/features/items/getSaveItems";
 import { Itemslist } from "@/lib/itemsList";
 import { MergedItem } from "@/types/mergedItem";
 import { Pokemon } from "@/types/pokemon";
 import { Angry, Annoyed, Frown, Smile } from "lucide-react";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { deletePokemon } from "@/features/pokemons/deletePokemon";
 
 export default async function MainScreen({
   params: paramsPromise,
@@ -22,25 +22,29 @@ export default async function MainScreen({
   const currentPkmn = pkmnArray[pkmnArray.length - 1];
 
   if (pkmnArray.length === 0)
-    return redirect(`/${params.saveName}/start-screen`);
+    return <RunAwayPkmnModal saveName={params.saveName} />;
   const lastPkmn: Pokemon = await getPokemon({
     pkmName: currentPkmn.pokemon.name,
   });
   const saveitems = save[0].items;
+  const totalStats =
+    currentPkmn.happiness +
+    currentPkmn.hunger +
+    currentPkmn.hpCurrent +
+    currentPkmn.cleanliness;
 
   const happyMeter = () => {
     const size = 40;
-    const totalStats =
-      currentPkmn.happiness +
-      currentPkmn.hunger +
-      currentPkmn.hpCurrent +
-      currentPkmn.cleanliness;
     const average = totalStats / 4;
     if (average < 10) return <Angry size={size} color="red" />;
     if (average < 30) return <Frown size={size} color="orange" />;
     if (average < 70) return <Annoyed size={size} color="yellow" />;
     return <Smile size={size} color="green" />;
   };
+  if (totalStats === 0) {
+    await deletePokemon(save[0].id, currentPkmn.pokemon.id);
+    return <RunAwayPkmnModal saveName={params.saveName} />;
+  }
 
   return (
     <main className="flex flex-col  items-center h-full ">

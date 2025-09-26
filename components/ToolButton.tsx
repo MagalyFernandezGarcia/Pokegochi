@@ -3,8 +3,9 @@
 import { ReactNode } from "react";
 import { Button } from "./ui/button";
 import { withdrawAUnit } from "@/features/items/withdrawAUnit";
-import { updatePokemonStat } from "@/features/updatePokemonStat";
+
 import { MergedItem } from "@/types/mergedItem";
+import { updatePokemonStat } from "@/features/pokemons/updatePokemonStat";
 
 type FullPkmn = {
   pokemon: {
@@ -38,8 +39,6 @@ export default function ToolButton({
   currentPokemon: FullPkmn;
 }) {
   const statToModify = currentItem.stats;
-
-  console.log(quantity);
 
   const removeQuantity = async () => {
     await withdrawAUnit(saveName, [currentItem.dbName]);
