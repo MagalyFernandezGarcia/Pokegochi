@@ -11,7 +11,6 @@ import Image from "next/image";
 import { deletePokemon } from "@/features/pokemons/deletePokemon";
 import { lvlUpPokemon } from "@/features/pokemons/lvlUpPokemon";
 import LvlUpModal from "@/components/LvlUpModal";
-import { hasEvolution } from "@/features/pokemons/hasEvolution";
 
 export default async function MainScreen({
   params: paramsPromise,
@@ -55,11 +54,16 @@ export default async function MainScreen({
     currentPkmn.cleanliness === 100 &&
     currentPkmn.hpCurrent === currentPkmn.hpBase
   ) {
-    await lvlUpPokemon(save[0].id, currentPkmn.pokemon.id);
-    return <LvlUpModal saveName={params.saveName} />;
+    const handleLvlUp = await lvlUpPokemon(
+      save[0].id,
+      currentPkmn.pokemon.id,
+      currentPkmn.pokemon.name,
+      params.saveName
+    );
+    return (
+      <LvlUpModal saveName={params.saveName} message={handleLvlUp.message} />
+    );
   }
-  const Evolution = await hasEvolution(currentPkmn.pokemon.name);
-  // console.log(currentPkmn);
 
   return (
     <main className="flex flex-col  items-center h-full ">

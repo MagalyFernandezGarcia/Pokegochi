@@ -40,4 +40,5 @@ export async function addPokemonToSave(
       hpCurrent: pv,
     },
   });
+  return pokemon;
 }

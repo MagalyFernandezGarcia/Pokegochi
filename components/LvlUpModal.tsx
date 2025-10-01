@@ -10,7 +10,13 @@ import {
 import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function LvlUpModal({ saveName }: { saveName: string }) {
+export default function LvlUpModal({
+  saveName,
+  message,
+}: {
+  saveName: string;
+  message: string;
+}) {
   const [open, setOpen] = useState(true);
   const router = useRouter();
   const handleClose = () => {
@@ -20,7 +26,7 @@ export default function LvlUpModal({ saveName }: { saveName: string }) {
     <Dialog defaultOpen={true} open={open} onOpenChange={() => router.back()}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Your Pokemon leveled up !</DialogTitle>
+          <DialogTitle>{message}</DialogTitle>
         </DialogHeader>
         <Button onClick={handleClose}>Close</Button>
       </DialogContent>

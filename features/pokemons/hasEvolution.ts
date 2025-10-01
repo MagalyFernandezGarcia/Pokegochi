@@ -11,7 +11,12 @@ export async function hasEvolution(pokemonName: string) {
   const evolutionChain = await axios.get(species.data.evolution_chain.url);
 
   if (evolutionChain.data.chain.evolves_to.length > 0) {
-    return evolutionChain.data.chain.evolves_to[0].species.name;
+    return {
+      name: evolutionChain.data.chain.evolves_to[0].species.name,
+      url: evolutionChain.data.chain.evolves_to[0].species.url,
+      level:
+        evolutionChain.data.chain.evolves_to[0].evolution_details[0].min_level,
+    };
   } else {
     return false;
   }
