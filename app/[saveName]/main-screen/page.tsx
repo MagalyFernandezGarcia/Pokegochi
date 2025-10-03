@@ -37,7 +37,14 @@ export default async function MainScreen({
 
   const happyMeter = () => {
     const size = 40;
-    const average = totalStats / 4;
+    const happinessPct =
+      (currentPkmn.happiness / currentPkmn.happinessBase) * 100;
+    const hungerPct = (currentPkmn.hunger / currentPkmn.hungerBase) * 100;
+    const cleanlinessPct =
+      (currentPkmn.cleanliness / currentPkmn.cleanlinessBase) * 100;
+    const hpPct = (currentPkmn.hpCurrent / currentPkmn.hpBase) * 100;
+
+    const average = (happinessPct + hungerPct + cleanlinessPct + hpPct) / 4;
     if (average < 10) return <Angry size={size} color="red" />;
     if (average < 30) return <Frown size={size} color="orange" />;
     if (average < 70) return <Annoyed size={size} color="yellow" />;
@@ -49,9 +56,9 @@ export default async function MainScreen({
   }
 
   if (
-    currentPkmn.happiness === 100 &&
-    currentPkmn.hunger === 100 &&
-    currentPkmn.cleanliness === 100 &&
+    currentPkmn.happiness === currentPkmn.happinessBase &&
+    currentPkmn.hunger === currentPkmn.hungerBase &&
+    currentPkmn.cleanliness === currentPkmn.cleanlinessBase &&
     currentPkmn.hpCurrent === currentPkmn.hpBase
   ) {
     const handleLvlUp = await lvlUpPokemon(
@@ -96,13 +103,19 @@ export default async function MainScreen({
         <ProgressBar current={currentPkmn.hpCurrent} max={currentPkmn.hpBase}>
           HP
         </ProgressBar>
-        <ProgressBar current={currentPkmn.happiness} max={100}>
+        <ProgressBar
+          current={currentPkmn.happiness}
+          max={currentPkmn.happinessBase}
+        >
           Happiness
         </ProgressBar>
-        <ProgressBar current={currentPkmn.hunger} max={100}>
+        <ProgressBar current={currentPkmn.hunger} max={currentPkmn.hungerBase}>
           Hunger
         </ProgressBar>
-        <ProgressBar current={currentPkmn.cleanliness} max={100}>
+        <ProgressBar
+          current={currentPkmn.cleanliness}
+          max={currentPkmn.cleanlinessBase}
+        >
           Cleanliness
         </ProgressBar>
       </section>

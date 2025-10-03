@@ -32,18 +32,22 @@ model Item {
 }
 
 model SavePokemonLink {
-  id          Int     @id @default(autoincrement())
-  saveId      Int
-  pokemonId   Int
-  hpCurrent   Int
-  hpBase      Int
-  happiness   Int     @default(1)
-  hunger      Int     @default(1)
-  cleanliness Int     @default(1)
-  level       Int     @default(0)
-  difficulty  Int     @default(0)
-  pokemon     Pokemon @relation(fields: [pokemonId], references: [id])
-  save        Save    @relation(fields: [saveId], references: [id])
+  id              Int     @id @default(autoincrement())
+  saveId          Int
+  pokemonId       Int
+  hpCurrent       Int
+  hpBase          Int
+  happiness       Int     @default(1)
+  hunger          Int     @default(1)
+  cleanliness     Int     @default(1)
+  happinessBase   Int     @default(100)
+  hungerBase      Int     @default(100)
+  cleanlinessBase Int     @default(100)
+  fightingPower   Int     @default(5)
+  level           Int     @default(0)
+  difficulty      Int     @default(0)
+  pokemon         Pokemon @relation(fields: [pokemonId], references: [id])
+  save            Save    @relation(fields: [saveId], references: [id])
 
   @@unique([saveId, pokemonId])
 }

@@ -5,7 +5,11 @@ import prisma from "@/lib/prisma";
 export async function addPokemonToSave(
   saveName: string,
   pokemonName: string,
-  pv: number
+  pv: number,
+  currentLevel?: number,
+  currentHappiness?: number,
+  currentHunger?: number,
+  currentCleanliness?: number
 ) {
   const pokemon = await prisma.pokemon.upsert({
     where: {
@@ -38,6 +42,10 @@ export async function addPokemonToSave(
       pokemonId: pokemon.id,
       hpBase: pv,
       hpCurrent: pv,
+      level: currentLevel || 0,
+      happinessBase: currentHappiness || 0,
+      hungerBase: currentHunger || 0,
+      cleanlinessBase: currentCleanliness || 0,
     },
   });
   return pokemon;

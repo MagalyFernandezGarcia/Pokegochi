@@ -24,6 +24,21 @@ export async function lvlUpPokemon(
       level: {
         increment: 1,
       },
+      hpBase: {
+        increment: 10,
+      },
+      happinessBase: {
+        increment: 10,
+      },
+      hungerBase: {
+        increment: 10,
+      },
+      cleanlinessBase: {
+        increment: 10,
+      },
+      fightingPower: {
+        increment: 1,
+      },
       hpCurrent: 50,
       happiness: 50,
       hunger: 50,
@@ -32,14 +47,17 @@ export async function lvlUpPokemon(
   });
 
   const evolution = await hasEvolution(pokemonName);
-  console.log(evolution);
 
   if (evolution && updateLvl.level === evolution.level) {
     const newPokemon: Pokemon = await getPokemon({ pkmName: evolution.name });
     const evolvedPokemon = await addPokemonToSave(
       saveName,
       newPokemon.name,
-      newPokemon.stats[0].base_stat
+      newPokemon.stats[0].base_stat,
+      updateLvl.level,
+      updateLvl.happinessBase,
+      updateLvl.hungerBase,
+      updateLvl.cleanlinessBase
     );
 
     return {
