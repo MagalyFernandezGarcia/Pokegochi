@@ -22,12 +22,11 @@ export default function StarterEgg({ saveName }: { saveName: string }) {
   };
 
   const addPkmn = async () => {
-    // await addItems();
     if (!starter) return;
     await addPokemonToSave(saveName, starter.name, starter.stats[0].base_stat);
     await addItemsToSave({
       saveName,
-      items: ["Basic Sponge", "Old Toy", "Little bag of food"],
+      items: ["basicSponge", "basicToy", "basicFood"],
     });
     router.replace(`/${saveName}/main-screen`);
   };

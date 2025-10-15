@@ -11,6 +11,13 @@ export async function addPokemonToSave(
   currentHunger?: number,
   currentCleanliness?: number
 ) {
+  console.log("stats", {
+    currentCleanliness,
+    currentHappiness,
+    currentHunger,
+    currentLevel,
+  });
+
   const pokemon = await prisma.pokemon.upsert({
     where: {
       name: pokemonName,
@@ -18,6 +25,7 @@ export async function addPokemonToSave(
     update: {},
     create: {
       name: pokemonName,
+      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonName}.png`,
     },
   });
 
@@ -42,10 +50,10 @@ export async function addPokemonToSave(
       pokemonId: pokemon.id,
       hpBase: pv,
       hpCurrent: pv,
-      level: currentLevel || 0,
-      happinessBase: currentHappiness || 0,
-      hungerBase: currentHunger || 0,
-      cleanlinessBase: currentCleanliness || 0,
+      level: currentLevel || 100,
+      happinessBase: currentHappiness || 100,
+      hungerBase: currentHunger || 100,
+      cleanlinessBase: currentCleanliness || 100,
     },
   });
   return pokemon;

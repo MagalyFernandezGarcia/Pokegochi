@@ -15,9 +15,11 @@ export async function addItemsToSave({
   const data = itemsToAdd.map((item) => ({
     saveId: save.id,
     itemId: item.id,
-    quantity: 10,
+    dbStock: 10,
+    shopStock: 100,
   }));
   await prisma.saveItemLink.createMany({
     data,
+    skipDuplicates: true,
   });
 }
