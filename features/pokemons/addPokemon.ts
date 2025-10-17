@@ -6,6 +6,7 @@ export async function addPokemonToSave(
   saveName: string,
   pokemonName: string,
   pv: number,
+  pokedexId?: number,
   currentLevel?: number,
   currentHappiness?: number,
   currentHunger?: number,
@@ -25,7 +26,7 @@ export async function addPokemonToSave(
     update: {},
     create: {
       name: pokemonName,
-      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonName}.png`,
+      pokedexNbr: pokedexId || 0,
     },
   });
 

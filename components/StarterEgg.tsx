@@ -20,10 +20,16 @@ export default function StarterEgg({ saveName }: { saveName: string }) {
     const starter = await getPokemon({ pkmNr: startersList[randomNumber()] });
     setStarter(starter);
   };
+  console.log("starter", starter);
 
   const addPkmn = async () => {
     if (!starter) return;
-    await addPokemonToSave(saveName, starter.name, starter.stats[0].base_stat);
+    await addPokemonToSave(
+      saveName,
+      starter.name,
+      starter.stats[0].base_stat,
+      starter.id
+    );
     await addItemsToSave({
       saveName,
       items: ["basicSponge", "basicToy", "basicFood"],
